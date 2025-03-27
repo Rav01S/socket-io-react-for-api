@@ -2,7 +2,7 @@ import {Navigate, Outlet} from "react-router-dom";
 import Header from "../../widgets/Header";
 import {initializeSocket} from "../../socketIO.ts";
 import {useEffect} from "react";
-import {ToastContainer} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 
 export default function AuthLayout() {
   const token = localStorage.getItem('token');
@@ -11,6 +11,10 @@ export default function AuthLayout() {
     if (token) {
       const socket = initializeSocket(token);
       socket.connect();
+
+      socket.on('yourPostResponded', (data) => {
+        toast.success(data.message);
+      })
 
       return () => {
         socket.disconnect();

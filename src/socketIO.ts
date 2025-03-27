@@ -3,7 +3,7 @@ import { io, Socket } from 'socket.io-client';
 
 const URL = 'ws://localhost:3500';
 
-let socket: Socket;
+let socket: Socket | null;
 
 export const initializeSocket = (token: string | null) => {
   // Если сокет уже существует - отключаем и очищаем
@@ -23,9 +23,6 @@ export const initializeSocket = (token: string | null) => {
 };
 
 export const getSocket = () => {
-  if (!socket) {
-    throw new Error('Socket not initialized. Call initializeSocket first.');
-  }
   return socket;
 };
 
@@ -42,3 +39,10 @@ export const updateSocketToken = (newToken: string) => {
     }
   }
 };
+
+export const deleteSocket = () => {
+  if (socket) {
+    socket.close();
+  }
+  socket = null;
+}

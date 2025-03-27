@@ -27,6 +27,9 @@ export const api = {
   register: (payload: TRegisterPayload) =>
     axiosClient.post('/register', payload),
 
+  logout: () =>
+    axiosClient.get('/logout'),
+
   getPosts: () =>
     axiosClient.get<TGetPostsResponse>('/posts'),
 

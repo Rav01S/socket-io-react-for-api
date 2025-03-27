@@ -13,7 +13,8 @@ axiosClient.interceptors.request.use(config => {
 axiosClient.interceptors.response.use(res => {
   return res;
 }, err => {
-  if (err.status === 401 && err.response.data.message === "Not token") {
+  if ((err.status === 401 && err.response.data.message === "Not token") ||
+    (err.status === 403 && err.response.data.message === "Invalid token")) {
     localStorage.removeItem("token");
     getSocket().close()
     window.location.reload()
